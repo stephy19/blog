@@ -1,0 +1,156 @@
+
+    
+    
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+ Liste des publication
+ {% endblock %}
+
+
+{% block content %}
+ <script>
+  document.getElementById("bu").addEventListener("click", function () {
+    document.getElementById("animbtn").classList.add("spinner-border");
+    setTimeout(function () {
+      document.getElementById("animbtn").classList.remove("spinner-border");
+    }, 500);
+  });
+  </script>
+ <style>
+    header {
+        background-image: url("{% static 'images/blogg.jpg' %}");
+        background-position:100%;
+        
+    }
+</style>
+    <header class="py-5 border-bottom mb-4" >
+            <div class="container">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder text-uppercase text-dark text-bg-light rounded-4">Bienvenue {{request.user.username | upper}} 🤩 sur IRIE-BLOG ! <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16"></svg>
+                    <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
+                    </svg></h1>
+                    
+                    {% if category %}
+                        <h3 class="fw-semibold text">suivez la catégorie : {{ category }}</h3>
+                    {% endif %}
+                        
+                </div>
+            </div>
+        </header>
+        
+         <!-- Page content-->
+        <div class="container">
+            <div class="row">
+                <!-- Blog entries-->
+                <div class="col-lg-8">
+                    <!-- Featured blog post-->
+                    <div class="card mb-4">
+                        <a href="#!"><img class="card-img-top" src="{% static 'images/news.jpg' %}" alt="..." /></a>
+                        <div class="card-body">
+                            <h3 class=" text-muted">
+                                {% if now %}
+                                {{ now }}
+                                {% endif %}
+                               
+                            </h3>
+                            <h2 class="card-title small">Incrivez vous pour voir plus d'infos et restez informés sur les dernières nouvelles du pays !</h2>
+                            {% if message %}
+                            <div class="alert alert-success" role="alert">
+                            <div>{{message}}</div>
+                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            {% endif %}
+                            <p class="card-text"></p>
+                            <button id="bu" class="btn " style="background-color:darkcyan ; "><a href="{% url 'accounts:register' %}" style="text-decoration: none; color: rgb(255, 255, 255) ; font-weight: bolder;"><span id="animbtn" class=" spinner-border-sm" aria-hidden="true"></span>Inscrivez vous</a></button>
+                        </div>
+                    </div>
+
+                    
+
+
+                    <!-- Nested row for non-featured blog posts-->
+                    <div class="row">
+                       
+                       {% for post in posts %}
+                         <div class="col-lg-6">
+                            <!-- Blog post-->
+                           
+                            <!-- Blog post-->
+                            <div class="card mb-4 bg-body-secondary">
+                                <a href="#!"><img class="card-img-top" src="{{post.image.url}}" alt="..." /></a>
+                                <div class="card-body">
+                                    <div class="small text-muted">{{post.publish}}</div>
+                                    <h2 class="card-title h4">{{post.title}}</h2>
+                                    <p class="card-text">{{ post.body | truncatechars:50 }}</p>
+                                    <button id="bu" class="btn" style="background-color:darkcyan ; "><a href="{% url 'blogapp:post_detail' post.slug %}" style="text-decoration: none; color: rgb(255, 255, 255) ; font-weight: bolder;"><span id="animbtn" class=" spinner-border-sm" aria-hidden="true"></span>Lire plus...</a></button>
+                                </div>
+                            </div>
+                        </div>
+                       {% endfor %}
+                        
+                       
+                    </div>
+                    <!-- Pagination-->
+             {% include 'blog/layouts/paginator.html' with page=posts %}
+                    <!-- <nav aria-label="Pagination">
+                        <hr class="my-0" />
+                        <ul class="pagination justify-content-center my-4">
+                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
+                            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                            <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                            <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                            <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+                        </ul>
+                    </nav> -->
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- Search widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Champs de recherche</div>
+                        <div class="card-body">
+                            <form method="get"  action="{% url 'blogapp:post_search' %}" >
+                                <input class="form-control" name="query" type="search" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                                <button class="btn btn-dark m-1" id="button-search" type="submit">rechercher</button>
+                            </form>
+
+                        </div>
+                    </div>
+                    <!-- Categories widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Categories de publication</div>
+                        <div class="card-body">
+                            <div class="row">
+                                
+                                {% for cat in categories %}
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a class="text-capitalize text-danger fw-bolder fst-italic" href="{% url 'blogapp:category_post_list' cat.slug %}">{{cat.name}}</a></li>
+                                    </ul>
+                                </div>                                    
+                                {% endfor %}
+                                    
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Side widget-->
+                   <div class="card text-bg-dark">
+                   <div class="card-header">INFO :</div>
+                   <div class="card-body">
+                     <h5 class="card-title">Pour toutes Publicités sur IRIE-BLOG cliquez sur le boutton ci-dessous</h5>
+                    <a href=" https://wa.me/+22559444725"><button class="btn btn-success" >whatsapp</button></a> 
+                   </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+
+
+
+  
+{% endblock %}
+

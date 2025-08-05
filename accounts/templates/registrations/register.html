@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ Connexion
+ {% endblock %}
+
+
+ {% block content %}
+
+ 
+  <div class="container">
+
+   <h1>Inscription</h1>
+    <form
+      method="post"
+      action="."
+      class="form-control border-1 border-dark shadow-lg rounded" enctype="multipart/form-data">
+
+      {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+      {% endif %}
+    {% csrf_token %}
+    <div class="form-group m-2">
+     
+     {{user_form.as_p}}
+      </div>
+   
+    <button type="submit" class="btn btn-dark">Inscription</button>
+  
+  </form>
+
+
+
+{% endblock %}

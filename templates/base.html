@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+    {% block title %}
+        
+    {% endblock title %}
+         </title>
+    <link rel="icon" href="{% static 'assets/favicon.png' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}" ></script>
+    <script>
+     document.addEventListener('DOMContentLoaded', function() {
+            const htmlElement = document.documentElement;
+            const themeToggle = document.getElementById('theme-toggle');
+
+            // Vérifier le thème sauvegardé dans localStorage
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                htmlElement.setAttribute('data-bs-theme', savedTheme);
+                updateButtonText(savedTheme);
+            }
+
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = htmlElement.getAttribute('data-bs-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+                htmlElement.setAttribute('data-bs-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateButtonText(newTheme);
+            });
+
+            function updateButtonText(theme) {
+                themeToggle.textContent = theme === 'light' ? 'mode sombre' : 'mode clair';
+            }
+        });
+    </script>
+</head>
+  <body>
+     <nav class="navbar navbar-expand-lg navbar-collapse" style="background-color: rgb(0, 66, 97) ;"> 
+            <div class="container">
+                <a class="navbar-brand fw-bolder text-white" href="/">🐼IRIE-BLOG</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fst-italic fw-bold ">
+                        <li class="nav-item "><a class="nav-link text-white" href="/">Accueil</a></li>
+                        <!-- <li class="nav-item "><a class="nav-link text-white" href="#!">About</a></li>
+                        <li class="nav-item "><a class="nav-link text-white" href="#!">Contact</a></li> -->
+                        {% if request.user.is_authenticated %}
+                   
+                    <a class="nav-link text-white" href="{% url 'accounts:dashboard' %}">Profile</a>
+                    <a class="nav-link text-white"href="{% url 'blogapp:add_post' %}">Créer un post</a>
+                        <li class="nav-item "><a class="nav-link text-white" href="{% url 'accounts:logout' %}">Déconnexion</a></li>
+                        {% else %}
+                        <li class="nav-item "><a class="nav-link text-white" href="{% url 'accounts:login' %}">Connexion</a></li>
+                        <li class="nav-item "><a class="nav-link text-white" href="{% url 'accounts:register' %}">Inscription</a></li>
+
+                        {% endif %}
+
+                        <button id="theme-toggle" class="btn btn-light rounded-5">Basculer en mode sombre</button>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    {% block content %}
+    {% endblock content %}
+    <!-- Footer-->
+   
+    <footer class="footer p-5" style="background-color: #011e24ff ;">
+    <div class="container "><p class="m-0 text-center text-white m-4">Copyright © 2025 , powered by DEV IRIE. </p></div>
+     </footer>
+       
+</body>
+{% block DomReady %}
+{% endblock DomReady %}
+
+</html>

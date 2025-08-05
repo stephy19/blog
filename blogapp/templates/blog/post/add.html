@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}
+ Ajouter un post
+ {% endblock %}
+
+ {% block content %}
+ <div class="container col-md-12">
+    {% if request.user.is_authenticated %}
+    <span>Bienvenue {{request.user.username}} , poste une publication 😃</span>
+
+{% if message %}
+    <div class="alert alert-success" role="alert">
+    <div>{{message}}</div>
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-6">
+     <h1>Ajouter un post </h1>
+    <form
+      method="post"
+      action="."
+      class="form-control border-1 border-dark  shadow-lg rounded"  enctype="multipart/form-data">
+
+      {% csrf_token %}
+      {{form.as_p}}
+      <input type="submit" class="btn btn-dark" value="Ajouter une publication">
+        <a href="{% url 'blogapp:post_list' %}" class="btn btn-danger">Retour</a>
+  </form>
+    </div>
+</div>  
+</div>
+   
+  {% else %}
+  <h1>Vous devez être connecté pour ajouter un post</h1>
+  <a href="{% url 'accounts:login' %}" class="btn btn-dark">Se connecter</a>
+  {% endif %}
+    </div>
+
+
+
+{% endblock %}

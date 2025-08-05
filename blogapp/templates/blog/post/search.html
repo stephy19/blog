@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ recherche
+ {% endblock%}
+
+ {% block content %}
+  
+ <div class="container column">
+    {% if query %}
+
+    <h1>Résultats de la recherche pour "{{query}}"</h1>
+    <h3>
+        {% with results.count as total_results %}
+               trouvé  {{total_results}} résultat{{total_results | pluralize}}
+        {% endwith %}
+    </h3>
+
+    {% for post in results %}
+        <div class="col-lg-6">
+             <!-- Blog post-->           
+             <!-- Blog post-->
+            <div class="card mb-4">
+                <a href="#!"><img class="card-img-top" src="{{post.image.url}}" alt="..." /></a>
+                <div class="card-body">
+                    <div class="small text-muted">{{post.publish}}</div>
+                     <h2 class="card-title h4">{{post.title}}</h2>
+                     <p class="card-text">{{ post.body | truncatechars:50 }}</p>
+                     <button id="bu" class="btn" style="background-color:darkcyan ; "><a href="{% url 'blogapp:post_detail' post.slug %}" style="text-decoration: none; color: rgb(255, 255, 255) ; font-weight: bolder;"><span id="animbtn" class=" spinner-border-sm" aria-hidden="true"></span>Lire plus...</a></button>
+                     <button id="bu" class="btn btn-secondary" ><a href="{% url 'blogapp:post_list' %} " class="text-dark" ><span id="animbtn" class=" spinner-border-sm" aria-hidden="true"></span>Retour</a></button>
+                </div>
+             </div>
+        </div>
+         {% empty %}
+        <p>Aucun résultat</p>
+        {% endfor %}
+       
+        {% else %}
+         
+        <h1>Recherche</h1>
+        <form  method="get" action="{% url 'blogapp:post_search' %}">
+           {% csrf_token %}
+           {{ search_form.as_p }}
+            <button type="submit" class="btn btn-dark">Rechercher</button>
+        </form>
+    {% endif %}
+
+ </div>
+    
+{% endblock %}

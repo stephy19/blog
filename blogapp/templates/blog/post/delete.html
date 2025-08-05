@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+ Supprimer un post
+ {% endblock %}
+
+ {% block content %}
+
+ <div class="container">
+
+{% if message %}
+<div class="alert alert-success">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div>{{message}}</div>
+</div>
+{% endif %}
+
+<button id="bu" class="btn btn-danger" ><a href="{% url 'blogapp:post_list' %}" style="text-decoration: none; color: rgb(255, 255, 255) ; font-weight: bolder;"><span id="animbtn" class=" spinner-border-sm" aria-hidden="true"></span>Retour</a></button>
+  <div>
+
+{% endblock %}
+
+
+
+

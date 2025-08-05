@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% block title %}
+ details de la publication
+ {% endblock%}
+
+ {% block content %}
+   <!-- Page content-->
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <h1 class="fw-bolder mb-1">{{post.title}}</h1>
+                            <!-- Post meta content-->
+                            <h3 class="text-muted fst-italic mb-2">Posté le {{post.publish}} ,  par {{post.author}}</h3>
+                            <!-- Post categories-->
+                            
+                            <a class="badge bg-secondary text-decoration-none link-light" href="#!"><em>IRIE DEV |</em> Developper fullstack</a>
+                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Designer web</a>
+                            
+                        </header>
+                        <!-- Preview image figure-->
+                        <figure class="mb-4"><img class="img-fluid rounded" src="{{post.image.url}}" alt="..." /></figure>
+                        <!-- Post content-->
+                        <section class="mb-5">
+                            <p class="fs-5 mb-4">{{post.body}}</p>
+                           
+                        </section>
+                          <button id="bu" class="btn btn-primary m-1" ><a href="{% url 'blogapp:post_list' %}" style="text-decoration: none; color: rgb(255, 255, 255) ; font-weight: bolder;"><span id="animbtn" class=" spinner-border-sm" aria-hidden="true"></span>Retour</a></button>
+                          {% if post.author == request.user %}
+                          <a href="{% url 'blogapp:post_update' post.slug %}" class="btn btn-outline-dark m-1" ><span id="animbtn" class=" spinner-border-sm" aria-hidden="true"></span>Modifier</a>
+                          <a href="{% url 'blogapp:post_delete' post.slug %}" class="btn btn-outline-danger m-1" ><span id="animbtn" class=" spinner-border-sm" aria-hidden="true"></span>Supprimer</a>
+                          {% else %}
+                          <text class="text-danger text-muted">impossible de modifier ce post car vous n'êtes pas l'auteur</text>
+                          {% endif %}
+                    </article>
+                    <!-- Comments section-->
+                    <section class="mb-5">
+                        <div class="card bg-body">
+                            <div class="card-body">
+                                <h2>
+                                    
+                                    {% with comments.count as total_comments %}
+                                    {{total_comments}} comment{{total_comments | pluralize}}
+                                        
+                                    {% endwith %}
+                                        
+                                </h2>
+                                
+                                <!-- Comment form-->
+                              
+                                    
+                                    {% if new_comment %}
+                                        <h3>Ton commentaire a été posté avec succès</h3>
+                                     {% else %}
+
+                                     <h3>Poster un commentaire</h3>
+
+                                    <form method="post" class="">
+                                        {% csrf_token %}
+                                        {{comment_form.as_p}}
+                                      
+                                        <button type="submit" class="btn btn-dark" value="Poster">Envoyer</button>
+                                    </form>
+
+                                    {% endif %}
+                                        
+                               
+                              
+                              <div class="comments">
+
+                              </div>
+                                <!-- Single comment-->
+                                
+                                {% for comments in comments %}
+                                     <!-- Single comment-->
+                                <div class="d-flex p-2">
+                                    <div class="flex-shrink-0"><img class="rounded-circle" src="{{comments.post.image.url}}" height="36" width="36" alt="..." /></div>
+                                    <div class="ms-3">
+                                        <div class="fw-bold">
+                                            {{forloop.count}}  {{comments.username}}
+                                          <div class="text-muted fst-italic mb-2">
+                                           à  {{comments.created}}
+                                         </div>
+                                         {{comments.body}}
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <p>Pas de commentaires</p>
+                                {% endfor %}
+                                
+                                  <!-- pagination -->
+                        
+
+                                <nav aria-label="Page navigation example">
+                                  <ul class="pagination">
+                                    {% if comments.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page={{comments.previous_page_number}}">Précédent</a></li>
+                                   {% endif %}
+                                    <li class="page-item"><a class="page-link" href="#">{{comments.number}}</a></li>
+                                    <li class="page-item active"><a class="page-link" href="#">of</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">{{comments.paginator.num_pages}}</a></li>
+                                    {% if comments.has_next %}
+                                   <li class="page-item"><a class="page-link" href="?page={{comments.next_page_number}}">Suivant</a></li>
+                                   {% endif %}
+                                  </ul>
+                                </nav>
+
+
+                        <!-- pagination end -->
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- Search widget-->
+                    <!-- <div class="card mb-4">
+                        <div class="card-header">Search</div>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                                <button class="btn btn-dark" id="button-search" type="button">Go!</button>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- Categories widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Categories</div>
+                        <div class="card-body">
+                            <div class="row">
+                                {% for cat in categories %}
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a class="text-capitalize text-danger fw-bolder fst-italic" href="{% url 'blogapp:category_post_list' cat.slug %}">{{cat.name}}</a></li>
+                                    </ul>
+                                </div>                                    
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Side widget-->
+                    <div class="card text-bg-dark">
+                   <div class="card-header">INFO :</div>
+                   <div class="card-body">
+                     <h5 class="card-title">Pour toutes Publicités sur IRIE-BLOG cliquez sur le boutton ci-dessous</h5>
+                    <a href=" https://wa.me/+22559444725"><button class="btn btn-success" >whatsapp</button></a> 
+                   </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+   
+  <script>
+  document.getElementById("bu").addEventListener("click", function () {
+    document.getElementById("animbtn").classList.add("spinner-border");
+    setTimeout(function () {
+      document.getElementById("animbtn").classList.remove("spinner-border");
+    }, 500);
+  });
+  </script>
+  
+{% endblock %}
+ 
+{% block DomReady %}
+<script>
+//   document.addEventListener("DOMContentLoaded", function(event) {
+//     const eventSource = new EventSource("/stream/{{post.id}}");
+//     eventSource.onmessage = function(event) {
+//       const data = JSON.parse(event.data);
+//       console.log(data);
+//       document.getElementById("comments").innerHTML = data.body;
+//     };
+//   });
+  let = eventSource = new EventSource("{% url 'blogapp:stream_view' post.id %}");
+eventSource.onopen = function(event) {
+  console.log("ouverture de la connexion");
+};
+
+eventSource.onmessage = function(event) {
+const resp =JSON.parse(event.data);
+if(resp?.length < 0){
+  content = "<h2>Aucun commentaire</h2>";
+}else {
+    resp?.map(function(item, index) {
+      content += Buildcontent(index+1, item['author_uername'], item['body'], 
+      item['created']);
+      
+    });
+}
+document.querySelector(".comment").innerHTML = content;
+console.log(resp);
+};
+
+eventSource.onerror = function(event) {
+  console.log(event);
+};
+
+function Buildcontent (index,){
+    const content = `  <div class="d-flex p-2">
+              <div class="flex-shrink-0"><img class="rounded-circle" src="{{comments.post.image.url}}" height="36" width="36" alt="..." /></div>
+              <div class="ms-3">
+                  <div class="fw-bold">
+                      #${{index}}  ${{author}}
+                     <div class="text-muted fst-italic mb-2">
+                      à  ${{created}}
+                  </div>
+                 {{comments.body}}
+             </div>
+         </div>`
+         return content;
+}
+
+</script>
+{% endblock DomReady %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+Modifier
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+    <form action="." class="form-control " method="POST" enctype="multipart/form-data">
+        <div class="form-group"></div>
+          {% csrf_token %}
+            {{user_form.as_p}}
+
+      <button type="submit" class="btn btn-dark">Modifier</button>
+        <a type="" href="{% url 'accounts:dashboard' %}" class="btn btn-danger">annuler</a>
+        </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+

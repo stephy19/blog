@@ -1,0 +1,134 @@
+[
+{
+  "model": "blogapp.category",
+  "pk": 1,
+  "fields": {
+    "name": "PYTHON",
+    "slug": "python"
+  }
+},
+{
+  "model": "blogapp.category",
+  "pk": 2,
+  "fields": {
+    "name": "PHP",
+    "slug": "php"
+  }
+},
+{
+  "model": "blogapp.category",
+  "pk": 3,
+  "fields": {
+    "name": "JAVASCRIPTS",
+    "slug": "javascripts"
+  }
+},
+{
+  "model": "blogapp.category",
+  "pk": 4,
+  "fields": {
+    "name": "CSS",
+    "slug": "css"
+  }
+},
+{
+  "model": "blogapp.category",
+  "pk": 5,
+  "fields": {
+    "name": "RUBY ON RAILS",
+    "slug": "ruby-on-rails"
+  }
+},
+{
+  "model": "blogapp.post",
+  "pk": 1,
+  "fields": {
+    "category": 1,
+    "title": "le framework django",
+    "slug": "le-framework-django",
+    "body": "le framework django",
+    "image": "python.png",
+    "created": "2025-07-13T19:25:41.040Z",
+    "updated": "2025-07-13T21:56:26.856Z",
+    "statut": "published",
+    "publish": "2025-07-13T19:22:28Z",
+    "author": 1
+  }
+},
+{
+  "model": "blogapp.post",
+  "pk": 2,
+  "fields": {
+    "category": 2,
+    "title": "le framework laravel",
+    "slug": "le-framework-laravel",
+    "body": "le framework laravel",
+    "image": "php.png",
+    "created": "2025-07-13T19:26:26.768Z",
+    "updated": "2025-07-13T21:56:33.477Z",
+    "statut": "published",
+    "publish": "2025-07-13T19:22:28Z",
+    "author": 1
+  }
+},
+{
+  "model": "blogapp.post",
+  "pk": 3,
+  "fields": {
+    "category": 3,
+    "title": "le framework next js",
+    "slug": "le-framework-next-js",
+    "body": "le framework next js",
+    "image": "js.png",
+    "created": "2025-07-13T19:27:13.924Z",
+    "updated": "2025-07-13T19:27:13.924Z",
+    "statut": "draft",
+    "publish": "2025-07-13T19:22:28Z",
+    "author": 1
+  }
+},
+{
+  "model": "blogapp.post",
+  "pk": 4,
+  "fields": {
+    "category": 1,
+    "title": "fast api",
+    "slug": "fast-api",
+    "body": "fast api",
+    "image": "python_FtBW8d7.png",
+    "created": "2025-07-13T19:27:46.112Z",
+    "updated": "2025-07-13T21:56:39.573Z",
+    "statut": "published",
+    "publish": "2025-07-13T19:22:28Z",
+    "author": 1
+  }
+},
+{
+  "model": "blogapp.post",
+  "pk": 5,
+  "fields": {
+    "category": 4,
+    "title": "le framework bootstrap css",
+    "slug": "le-framework-bootstrap-css",
+    "body": "le framework bootstrap css",
+    "image": "css.png",
+    "created": "2025-07-13T19:28:32.227Z",
+    "updated": "2025-07-13T21:56:46.653Z",
+    "statut": "published",
+    "publish": "2025-07-13T19:22:28Z",
+    "author": 1
+  }
+},
+{
+  "model": "blogapp.comments",
+  "pk": 4,
+  "fields": {
+    "post": 2,
+    "username": "phpaddcomment",
+    "email": "php@email.com",
+    "body": "test php",
+    "created": "2025-07-14T16:53:43.261Z",
+    "updated": "2025-07-14T16:53:43.261Z"
+  }
+}
+]

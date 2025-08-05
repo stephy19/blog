@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+ Modifier un post
+ {% endblock %}
+
+ {% block content %}
+ <div class="container column">
+    {% if request.user.is_authenticated %}
+    <span>Bienvenue {{request.user.username}} , poste une publication 😃</span>
+
+{% if message %}
+    <div class="alert alert-success" role="alert">
+    <div>{{message}}</div>
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+    
+  
+    <h1>Modifier un post </h1>
+    <form
+      method="post"
+      action="."
+      class="form-control border-1 border-dark mb-3 shadow-lg w-50 rounded"  enctype="multipart/form-data">
+
+      {% csrf_token %}
+      {{form.as_p}}
+      <button type="submit" class="btn btn-dark">Modifier la publication</button>
+      <a href="{% url 'blogapp:post_list' %}" class="btn btn-danger">Annuler</a>
+  </form>
+  {% else %}
+  <h1>Vous devez être connecté pour modifier un post</h1>
+  <a href="{% url 'accounts:login' %}" class="btn btn-dark">Se connecter</a>
+  {% endif %}
+    </div>
+
+
+
+{% endblock %}
