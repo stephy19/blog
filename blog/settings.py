@@ -139,9 +139,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+if os.getenv('RAILWAY_STATICFILES') != 'True':  # ou 'DEBUG' in os.environ
+    STATICFILES_DIRS = [BASE_DIR / 'static']
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
