@@ -28,7 +28,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     statut = models.CharField(choices=STATUTS_CHOICES, default='draft', max_length=10)
-    publish = models.DateTimeField(default=timezone.now())
+    publish = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE , related_name='posted')
     objects = models.Manager() #manager par defautf
     published = PublishedManager() #manager personnalisé
