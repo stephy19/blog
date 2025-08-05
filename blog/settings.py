@@ -28,6 +28,9 @@ DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://blog-irie.up.railway.app/",
+]
 
 
 # Application definition
@@ -62,10 +65,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'blog.urls'
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://blog-production-da62.up.railway.app",
-    "https://blog-irie.up.railway.app/",
-]
 
 TEMPLATES = [
     {
