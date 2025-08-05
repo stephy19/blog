@@ -78,7 +78,14 @@
                            
                             <!-- Blog post-->
                             <div class="card mb-4 bg-body-secondary">
+                                
+                                {% if  post.image %}
                                 <a href="#!"><img class="card-img-top" src="{{post.image.url}}" alt="..." /></a>
+                                    {% else %}
+                                <a href="#!"><img class="card-img-top" src="" alt="image" /></a>
+
+                                {% endif %}
+                                    
                                 <div class="card-body">
                                     <div class="small text-muted">{{post.publish}}</div>
                                     <h2 class="card-title h4">{{post.title}}</h2>
