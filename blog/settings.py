@@ -138,8 +138,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-if os.getenv('RAILWAY_STATICFILES') != 'True':  # ou 'DEBUG' in os.environ
+STATIC_ROOT = BASE_DIR / 'staticfiles
+'
+if os.getenv("RAILWAY_ENVIRONMENT") is None:
     STATICFILES_DIRS = [BASE_DIR / 'static']
 
 
