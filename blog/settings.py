@@ -28,9 +28,8 @@ DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://blog-irie.up.railway.app/",
-]
+CSRF_TRUSTED_ORIGINS = ['https://blog-irie.up.railway.app']
+
 
 
 # Application definition
