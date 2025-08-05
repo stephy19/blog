@@ -3,13 +3,17 @@
 from pathlib import Path
 # from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
+from urllib.parse import urlparse, parse_qsl
+
+
 from decouple import config,Csv
 import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = BASE_DIR / 'templates'
 
-# load_dotenv()
+load_dotenv()
 
 # DB_NAME = os.getenv('')
 
@@ -85,10 +89,19 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default':  dj_database_url.parse(config('DB_URL'))
-}
+tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': tmpPostgres.path.replace('/', ''),
+        'USER': tmpPostgres.username,
+        'PASSWORD': tmpPostgres.password,
+        'HOST': tmpPostgres.hostname,
+        'PORT': 5432,
+        'OPTIONS': dict(parse_qsl(tmpPostgres.query)),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
