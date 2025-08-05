@@ -63,7 +63,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'blog.urls'
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://blog-irie.up.railway.app/",
+   ' https://blog-irie.up.railway.app',
 ]
 
 TEMPLATES = [
